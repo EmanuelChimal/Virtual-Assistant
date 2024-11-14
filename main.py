@@ -1,5 +1,6 @@
 import nltk
 import requests
+import re
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
@@ -29,3 +30,12 @@ def get_weather(city):
         return f"El clima en {city} es {weather} con una temperatura de {temp}°C."
     else:
         return "No se pudo obtener la información del clima. Verifica la ciudad."
+
+
+def evaluate_expression(expression):
+    try:
+        # Evita el uso de `eval` con cadenas no verificadas; asegúrate de limpiar la entrada.
+        result = eval(re.sub(r'[^0-9+\-*/().]', '', expression))
+        return f"El resultado de {expression} es {result}."
+    except:
+        return "No pude calcular esa expresión."
