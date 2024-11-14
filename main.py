@@ -21,6 +21,7 @@ def handle_common_questions(question):
 def get_weather(city):
     api_key = 'bcaf045e8b7663783b9653a7670b052e'
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
+    
     response = requests.get(url)
     data = response.json()
     
@@ -29,7 +30,8 @@ def get_weather(city):
         temp = data['main']['temp']
         return f"El clima en {city} es {weather} con una temperatura de {temp}°C."
     else:
-        return "No se pudo obtener la información del clima. Verifica la ciudad."
+        return f"No se pudo obtener la información del clima para {city}. Verifica el nombre de la ciudad o tu clave de API."
+
 
 
 def evaluate_expression(expression):
@@ -50,8 +52,11 @@ def main():
         
         # Procesa la entrada del usuario
         if "clima" in user_input:
-            city = user_input.split("clima en")[-1].strip()
-            response = get_weather(city)
+            if "clima en" in user_input:
+                city = user_input.split("clima en")[-1].strip()
+                response = get_weather(city)
+            else:
+                response = "Por favor, indícame la ciudad para la que deseas saber el clima. Por ejemplo: 'clima en Madrid'."
         elif re.search(r'\d+[\+\-\*/]\d+', user_input):
             response = evaluate_expression(user_input)
         else:
@@ -59,5 +64,6 @@ def main():
         
         print("Asistente: " + response)
 
+# Llamada a la función principal
 if __name__ == "__main__":
     main()
