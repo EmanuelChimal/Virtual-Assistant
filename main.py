@@ -39,3 +39,25 @@ def evaluate_expression(expression):
         return f"El resultado de {expression} es {result}."
     except:
         return "No pude calcular esa expresión."
+
+def main():
+    print("Hola, soy tu asistente virtual. Escribe 'salir' para terminar.")
+    while True:
+        user_input = input("Tú: ")
+        if user_input.lower() == 'salir':
+            print("¡Hasta luego!")
+            break
+        
+        # Procesa la entrada del usuario
+        if "clima" in user_input:
+            city = user_input.split("clima en")[-1].strip()
+            response = get_weather(city)
+        elif re.search(r'\d+[\+\-\*/]\d+', user_input):
+            response = evaluate_expression(user_input)
+        else:
+            response = handle_common_questions(user_input)
+        
+        print("Asistente: " + response)
+
+if __name__ == "__main__":
+    main()
