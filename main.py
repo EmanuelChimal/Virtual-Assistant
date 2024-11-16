@@ -19,7 +19,7 @@ def handle_common_questions(question):
 
 
 def get_weather(city):
-    api_key = "bcaf045e8b7663783b9653a7670b052e"
+    api_key = "El token"
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
     
     response = requests.get(url)
